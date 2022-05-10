@@ -3,8 +3,10 @@
 if [[ "0" == ${CIRCLE_NODE_INDEX} ]]
 then
 	echo controller
-	echo ${CIRCLE_WORKFLOW_ID}
+	python -m http.server 8080 &
+	ngrok http --subdomain=${CIRCLE_WORKFLOW_ID} 8080
 else
 	echo agent
-	echo ${CIRCLE_WORKFLOW_ID}
+	sleep 30
+	curl http://${CIRCLE_WORKFLOW_ID}.ngrok.io:8080/
 fi
