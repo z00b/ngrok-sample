@@ -15,24 +15,37 @@ commands:
 
 jobs:
   controller:
-  network:
-    parallelism: 3
     docker:
       - image: cimg/python:3.9.2
-
-    working_directory: ~/repo
 
     steps:
       - checkout
       - ngrok_install
-
       - run:
-          name: spin up server
+          name: Start controller
           command: |
-            ./network.sh
+            python -m http.server 8080 &
+            sleep 5
+            ngrok http --subdomain=${CIRCLE_WORKFLOW_ID} 8080
+
+
+  agent:
+    parallelism: 2
+    docker:
+      - image: cimg/python:3.9.2
+
+    steps:
+      - checkout
+      - ngrok_install
+      - run:
+          name: Start agent
+          command: |
+            sleep 30
+	          curl --verbose --max-time 5 https://${CIRCLE_WORKFLOW_ID}.ngrok.io/
 
 workflows:
   version: 2
   do_networking:
     jobs:
-      - network
+      - controller
+      - agent
