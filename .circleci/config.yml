@@ -2,6 +2,7 @@ version: 2.1
 
 jobs:
   network:
+    parallelism: 3
     docker:
       - image: cimg/python:3.9.2
 
@@ -22,7 +23,10 @@ jobs:
 
       - run:
           name: spin up server
-          command: echo "spinning up"
+          command: |
+            echo Total Nodes: ${CIRCLE_NODE_TOTAL}
+            echo Current Node: ${CIRCLE_NODE_INDEX}
+            echo Workflow ID: ${CIRCLE_WORKFLOW_ID}
 
 workflows:
   version: 2
