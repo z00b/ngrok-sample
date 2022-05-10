@@ -26,7 +26,7 @@ jobs:
           command: |
             python -m http.server 8080 &
             sleep 5
-            ngrok http --subdomain=${CIRCLE_WORKFLOW_ID} 8080
+            timeout 60s ngrok http --subdomain=${CIRCLE_WORKFLOW_ID} 8080
 
 
   agent:
