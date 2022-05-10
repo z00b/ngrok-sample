@@ -10,6 +10,6 @@ then
 else
 	echo agent
 	sleep 30
-	echo "curl'ing http://${CIRCLE_WORKFLOW_ID}.ngrok.io:8080/"
-	curl --verbose --max-time 5 http://${CIRCLE_WORKFLOW_ID}.ngrok.io:8080/
+	echo "curl'ing https://${CIRCLE_WORKFLOW_ID}.ngrok.io/"
+	curl --verbose --max-time 5 https://${CIRCLE_WORKFLOW_ID}.ngrok.io/
 fi
