@@ -41,7 +41,7 @@ jobs:
           name: Start agent
           command: |
             sleep 30
-	          curl --verbose --max-time 5 https://${CIRCLE_WORKFLOW_ID}.ngrok.io/
+            curl --verbose --max-time 5 https://${CIRCLE_WORKFLOW_ID}.ngrok.io/
 
 workflows:
   version: 2
