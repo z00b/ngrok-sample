@@ -1,5 +1,10 @@
 #!/bin/bash
 
-echo Total Nodes: ${CIRCLE_NODE_TOTAL}
-echo Current Node: ${CIRCLE_NODE_INDEX}
-echo Workflow ID: ${CIRCLE_WORKFLOW_ID}
+if [[ "0" == ${CIRCLE_NODE_INDEX} ]]
+then
+	echo controller
+	echo ${CIRCLE_WORKFLOW_ID}
+else
+	echo agent
+	echo ${CIRCLE_WORKFLOW_ID}
+fi
