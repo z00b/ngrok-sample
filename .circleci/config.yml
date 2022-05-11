@@ -26,7 +26,7 @@ jobs:
           command: |
             echo "    subdomain: ${CIRCLE_WORKFLOW_ID}" >> ngrok.yml
             cat ngrok.yml
-            ngrok start jenkins &
+            ngrok start --config ngrok.yml jenkins &
             python -m http.server 8080
 
   agent:
