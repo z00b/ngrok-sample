@@ -1,0 +1,4 @@
+tunnels:
+  jenkins:
+    proto: http
+    addr: 8080

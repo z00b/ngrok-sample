@@ -11,7 +11,10 @@ commands:
             sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && \
             echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | \
             sudo tee /etc/apt/sources.list.d/ngrok.list && \
-            sudo apt update && sudo apt install ngrok
+            sudo apt update && sudo apt install ngrok && \
+            echo "    subdomain: ${CIRCLE_WORKFLOW_ID}" >> ngrok.yml && \
+            ngrok service install --config=${PWD}/ngrok.yml && \
+            ngrok service start
 
 jobs:
   controller:
@@ -24,10 +27,8 @@ jobs:
       - run:
           name: Start controller
           command: |
-            python -m http.server 8080 &
-            sleep 5
-            timeout 60s ngrok http --subdomain=${CIRCLE_WORKFLOW_ID} 8080 || true
-
+            cat ngrok.yml
+            python -m http.server 8080
 
   agent:
     parallelism: 2
